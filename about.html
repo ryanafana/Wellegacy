@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About LaTanya · Wellegacy</title>
+<meta name="description" content="Meet LaTanya, M.A. HWC-designated wellness travel curator, ASTA-affiliated travel agent, and founder of Wellegacy. Luxury travel curation for women ready to receive.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --brown:  #2C1A0E;
+  --ochre:  #C67D2F;
+  --gold:   #E8A840;
+  --sand:   #F0DEC2;
+  --cream:  #FAF5EC;
+  --teal-d: #1C4A47;
+  --teal-m: #2D6E6A;
+  --blush:  #E8C4A0;
+  --black:  #0F0A06;
+  --f-disp: 'Playfair Display', serif;
+  --f-pull: 'Cormorant Garamond', serif;
+  --f-body: 'DM Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--brown);
+  font-family: var(--f-body);
+  cursor: none;
+  overflow-x: hidden;
+}
+
+/* CURSOR */
+.cursor-dot, .cursor-ring {
+  position: fixed; border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+.cursor-dot  { width: 8px; height: 8px; background: var(--ochre); }
+.cursor-ring { width: 32px; height: 32px; border: 1.5px solid var(--ochre); opacity: .5; transition: transform .14s ease; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 76px;
+  background: rgba(250,245,236,.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(44,26,14,.08);
+}
+.nav-logo a {
+  font-family: var(--f-disp); font-size: 1.25rem;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--brown); text-decoration: none; line-height: 1;
+}
+.nav-logo a span {
+  display: block; font-family: var(--f-pull); font-style: italic;
+  font-size: .62rem; letter-spacing: .18em; color: var(--ochre);
+  text-transform: lowercase; margin-top: 2px;
+}
+.nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+.nav-links a {
+  font-family: var(--f-body); font-size: .78rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--brown); text-decoration: none;
+  opacity: .65; transition: opacity .2s, color .2s;
+}
+.nav-links a:hover { opacity: 1; }
+.nav-links a.active { opacity: 1; color: var(--ochre); }
+.nav-cta {
+  background: var(--brown) !important; color: var(--cream) !important;
+  opacity: 1 !important; padding: 10px 22px; border-radius: 2px;
+}
+.nav-cta:hover { background: var(--ochre) !important; }
+
+/* HERO */
+.hero { margin-top: 76px; min-height: 72vh; display: grid; grid-template-columns: 1fr 1fr; }
+.hero-text {
+  background: var(--teal-d); color: var(--cream);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 72px;
+}
+.hero-eyebrow {
+  font-family: var(--f-body); font-size: .72rem; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 20px;
+}
+.hero-headline {
+  font-family: var(--f-disp); font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+  font-style: italic; line-height: 1.18; color: var(--cream); margin-bottom: 28px;
+}
+.hero-sub {
+  font-family: var(--f-pull); font-size: 1.18rem;
+  line-height: 1.72; color: var(--blush); max-width: 420px;
+}
+.hero-image { background: var(--sand); overflow: hidden; min-height: 480px; }
+.hero-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.img-placeholder {
+  width: 100%; height: 100%; min-height: 480px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px;
+  background: linear-gradient(145deg, var(--sand), var(--blush));
+}
+.ph-icon { font-size: 2.4rem; opacity: .35; }
+.ph-label {
+  font-family: var(--f-pull); font-style: italic;
+  font-size: .9rem; color: var(--brown); opacity: .45; text-align: center;
+}
+
+/* CREDENTIAL STRIP */
+.cred-strip {
+  background: var(--brown); padding: 18px 48px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 40px; flex-wrap: wrap;
+}
+.cred-strip-item {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--f-body); font-size: .72rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--cream); opacity: .88;
+}
+.cred-strip-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.cred-strip-sep { width: 1px; height: 24px; background: rgba(255,255,255,.14); }
+
+/* LAYOUT */
+.section     { padding: 100px 0; }
+.wrap        { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+.wrap-narrow { max-width: 840px;  margin: 0 auto; padding: 0 48px; }
+
+/* STORY */
+.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.story-left { display: flex; flex-direction: column; }
+
+.eyebrow {
+  font-family: var(--f-body); font-size: .72rem; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--ochre); margin-bottom: 16px; display: block;
+}
+.section-headline {
+  font-family: var(--f-disp); font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  line-height: 1.22; color: var(--brown); margin-bottom: 36px;
+}
+.prose p {
+  font-family: var(--f-body); font-size: .98rem; line-height: 1.88;
+  color: var(--brown); opacity: .82; margin-bottom: 18px;
+}
+.prose p:last-child { margin-bottom: 0; }
+
+.badge-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+.badge {
+  background: var(--cream); border: 1px solid rgba(44,26,14,.15);
+  padding: 8px 16px; font-family: var(--f-body); font-size: .7rem;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--brown);
+  border-radius: 2px; display: flex; align-items: center; gap: 8px;
+}
+.badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ochre); }
+
+.story-right { position: sticky; top: 100px; }
+.portrait-frame {
+  position: relative; aspect-ratio: 3/4;
+  overflow: hidden; border-radius: 2px; background: var(--sand);
+}
+.portrait-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.portrait-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+  background: linear-gradient(160deg, var(--sand) 0%, var(--blush) 60%, var(--ochre) 100%);
+}
+.portrait-placeholder .ph-icon { font-size: 2.8rem; opacity: .3; }
+.portrait-placeholder .ph-label {
+  font-family: var(--f-pull); font-style: italic;
+  font-size: .95rem; color: var(--brown); opacity: .45;
+  text-align: center; padding: 0 24px;
+}
+.portrait-accent {
+  position: absolute; bottom: -16px; right: -16px;
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--ochre); opacity: .3; z-index: -1;
+}
+
+/* PULL QUOTE */
+.pullquote-section {
+  background: var(--teal-d); padding: 96px 48px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.pullquote-section::before {
+  content: '\201C';
+  position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+  font-family: var(--f-disp); font-size: 22rem; color: var(--teal-m);
+  line-height: 1; pointer-events: none; opacity: .4;
+}
+.pullquote-text {
+  font-family: var(--f-pull); font-style: italic;
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem); line-height: 1.48;
+  color: var(--cream); max-width: 860px; margin: 0 auto 28px;
+  position: relative; z-index: 1;
+}
+.pullquote-attr {
+  font-family: var(--f-body); font-size: .75rem; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--gold); position: relative; z-index: 1;
+}
+
+/* CREDENTIALS */
+.creds-section { background: var(--sand); }
+.creds-intro { text-align: center; margin-bottom: 60px; }
+.creds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.cred-card { background: var(--cream); padding: 44px 32px; transition: background .25s; }
+.cred-card:hover { background: #fff; }
+.cred-num {
+  font-family: var(--f-disp); font-style: italic; font-size: 3.2rem;
+  color: var(--ochre); opacity: .3; line-height: 1; margin-bottom: 12px;
+}
+.cred-title { font-family: var(--f-disp); font-size: 1.05rem; color: var(--brown); line-height: 1.3; margin-bottom: 12px; }
+.cred-body { font-family: var(--f-body); font-size: .88rem; line-height: 1.78; color: var(--brown); opacity: .72; }
+
+/* VALUES */
+.values-section { background: var(--brown); padding: 100px 0; }
+.values-header { text-align: center; margin-bottom: 64px; }
+.values-header .eyebrow { color: var(--gold); }
+.values-header h2 {
+  font-family: var(--f-disp); font-style: italic;
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem); color: var(--cream);
+}
+.values-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+  max-width: 960px; margin: 0 auto;
+}
+.value-item {
+  background: var(--brown); padding: 48px 44px;
+  border: 1px solid rgba(255,255,255,.05); transition: background .25s;
+}
+.value-item:hover { background: #3a2214; }
+.value-num {
+  font-family: var(--f-pull); font-style: italic; font-size: .85rem;
+  color: var(--ochre); letter-spacing: .1em; display: block; margin-bottom: 14px;
+}
+.value-title { font-family: var(--f-disp); font-size: 1.18rem; color: var(--cream); margin-bottom: 14px; }
+.value-body { font-family: var(--f-body); font-size: .88rem; line-height: 1.82; color: var(--blush); opacity: .78; }
+
+/* CTA */
+.cta-section { background: var(--cream); padding: 100px 0; text-align: center; }
+.cta-headline {
+  font-family: var(--f-disp); font-style: italic;
+  font-size: clamp(1.9rem, 3.5vw, 3rem); color: var(--brown);
+  line-height: 1.22; margin-bottom: 20px;
+}
+.cta-sub {
+  font-family: var(--f-pull); font-size: 1.12rem; color: var(--brown);
+  opacity: .68; max-width: 480px; margin: 0 auto 40px; line-height: 1.65;
+}
+.btn {
+  display: inline-block; background: var(--brown); color: var(--cream);
+  font-family: var(--f-body); font-size: .78rem; letter-spacing: .15em;
+  text-transform: uppercase; text-decoration: none; padding: 18px 44px;
+  border-radius: 2px; transition: background .22s, transform .18s;
+}
+.btn:hover { background: var(--ochre); transform: translateY(-2px); }
+
+/* FOOTER */
+footer { background: var(--black); color: var(--cream); padding: 64px 48px 36px; }
+.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-wordmark {
+  font-family: var(--f-disp); font-size: 1.12rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--cream); display: block; margin-bottom: 2px;
+}
+.footer-submark { font-family: var(--f-pull); font-style: italic; font-size: .62rem; letter-spacing: .16em; color: var(--ochre); }
+.footer-brand p { font-family: var(--f-body); font-size: .8rem; line-height: 1.72; opacity: .5; margin-top: 14px; max-width: 250px; }
+.trust-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.trust-pill {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+  padding: 5px 12px; border-radius: 20px; font-family: var(--f-body);
+  font-size: .63rem; letter-spacing: .08em; text-transform: uppercase; color: var(--blush);
+}
+.footer-col h4 {
+  font-family: var(--f-body); font-size: .68rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--ochre); margin-bottom: 16px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 10px; }
+.footer-col a { font-family: var(--f-body); font-size: .8rem; color: var(--cream); opacity: .5; text-decoration: none; transition: opacity .2s; }
+.footer-col a:hover { opacity: 1; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,.08); padding-top: 24px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+}
+.footer-bottom p, .footer-bottom a {
+  font-family: var(--f-body); font-size: .73rem; color: var(--cream); opacity: .32; text-decoration: none;
+}
+.footer-bottom a:hover { opacity: .65; }
+.footer-legal { display: flex; gap: 24px; }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* MOBILE */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-image { order: -1; min-height: 300px; }
+  .hero-text { padding: 56px 28px; }
+  .cred-strip { padding: 16px 24px; gap: 16px; }
+  .cred-strip-sep { display: none; }
+  .wrap, .wrap-narrow { padding: 0 24px; }
+  .section { padding: 72px 0; }
+  .story-grid { grid-template-columns: 1fr; gap: 48px; }
+  .story-right { position: static; }
+  .creds-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .pullquote-section { padding: 60px 24px; }
+  .pullquote-section::before { font-size: 10rem; top: -10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo">
+    <a href="wellegacy.html">WELLEGACY<span>travel curation</span></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="experiences.html">Experiences</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="journal.html">Journal</a></li>
+    <li><a href="investment.html">Investment</a></li>
+    <li><a href="wellegacy-apply.html" class="nav-cta">Apply Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Meet the Curator</p>
+    <h1 class="hero-headline">Built from the inside out. Every trip. Every time.</h1>
+    <p class="hero-sub">LaTanya didn't stumble into wellness travel. She needed it. And when she looked around and couldn't find anyone doing it the way it deserved to be done, she stopped looking and started building.</p>
+  </div>
+  <div class="hero-image">
+    <!-- Replace with: <img src="..." alt="LaTanya"> when elisaveta image is ready -->
+    <div class="img-placeholder">
+      <span class="ph-icon">◈</span>
+      <span class="ph-label">Portrait of LaTanya<br><em>elisaveta</em></span>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENTIAL STRIP -->
+<div class="cred-strip">
+  <div class="cred-strip-item"><span class="cred-strip-dot"></span>M.A. HWC · Wellness Travel Curator</div>
+  <div class="cred-strip-sep"></div>
+  <div class="cred-strip-item"><span class="cred-strip-dot"></span>ASTA-Affiliated Travel Agent</div>
+  <div class="cred-strip-sep"></div>
+  <div class="cred-strip-item"><span class="cred-strip-dot"></span>Virgin Voyages Partner</div>
+  <div class="cred-strip-sep"></div>
+  <div class="cred-strip-item"><span class="cred-strip-dot"></span>DAU-Certified Contracting Officer</div>
+</div>
+
+<!-- FOUNDER STORY -->
+<section class="section" style="background: var(--cream);">
+  <div class="wrap">
+    <div class="story-grid">
+
+      <div class="story-left">
+        <span class="eyebrow reveal">The Origin</span>
+        <h2 class="section-headline reveal">She wasn't running from burnout. She was running toward something she didn't have a word for yet.</h2>
+
+        <div class="prose">
+          <p class="reveal">LaTanya spent years doing the demanding, invisible work that high-achieving women know intimately. She managed multimillion-dollar contracts with precision and grace. She showed up fully in rooms that rarely returned the favor. She was decorated. Credentialed. Respected. And running on empty in a way she had no language for yet.</p>
+
+          <p class="reveal">The trip that changed everything wasn't the most expensive one she'd ever taken. It was the quality of attention behind it. Someone asked the right questions first. Someone curated around who she was arriving as and who she was trying to become. That experience didn't just restore her. It recalibrated something deep. She came home different.</p>
+
+          <p class="reveal">She built Wellegacy from that place. Not as a travel agency. As a deliberate response to a specific kind of woman: the one who has spent years planning everything for everyone else and keeps quietly postponing herself.</p>
+
+          <p class="reveal">She brought her whole self to it. The M.A. in Health and Wellness Coaching. The ASTA affiliation. The contracting officer's instinct for precision and accountability. The partnerships with premium to luxury land and sea providers. The technical rigor. And more than any credential on paper, the embodied knowledge of what it feels like to arrive somewhere and finally be held by the itinerary instead of managing it.</p>
+
+          <p class="reveal">That is what she builds for you.</p>
+        </div>
+
+        <div class="badge-row reveal">
+          <span class="badge"><span class="badge-dot"></span>M.A. HWC Designated</span>
+          <span class="badge"><span class="badge-dot"></span>ASTA Member</span>
+          <span class="badge"><span class="badge-dot"></span>Virgin Voyages Partner</span>
+          <span class="badge"><span class="badge-dot"></span>DAU Certified</span>
+        </div>
+      </div>
+
+      <div class="story-right reveal">
+        <div class="portrait-frame">
+          <!-- Replace with: <img src="..." alt="LaTanya"> when elisaveta image is ready -->
+          <div class="portrait-placeholder">
+            <span class="ph-icon">◈</span>
+            <span class="ph-label">Portrait · LaTanya<br><em>elisaveta</em></span>
+          </div>
+          <div class="portrait-accent"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<section class="pullquote-section">
+  <p class="pullquote-text">"Restoration isn't a reward for finishing everything on your list. It's the prerequisite for doing any of it well. I built Wellegacy so women could stop waiting for permission to receive."</p>
+  <p class="pullquote-attr">LaTanya · Founder &amp; Curator, Wellegacy</p>
+</section>
+
+<!-- CREDENTIALS -->
+<section class="section creds-section">
+  <div class="wrap">
+    <div class="creds-intro reveal">
+      <span class="eyebrow">The Credentials</span>
+      <h2 class="section-headline" style="margin-bottom: 0;">What LaTanya brings to every itinerary</h2>
+    </div>
+
+    <div class="creds-grid">
+      <div class="cred-card reveal">
+        <div class="cred-num">01</div>
+        <h3 class="cred-title">M.A. Health &amp; Wellness Coaching (HWC)</h3>
+        <p class="cred-body">This is not a certification picked up between trips. The M.A. HWC designation means every itinerary is built with genuine working knowledge of how restoration actually functions, physiologically, psychologically, and personally. The trip is designed around the whole woman. Not just the wish list.</p>
+      </div>
+
+      <div class="cred-card reveal">
+        <div class="cred-num">02</div>
+        <h3 class="cred-title">ASTA-Affiliated Travel Professional</h3>
+        <p class="cred-body">ASTA membership holds travel professionals to an enforced code of ethics and professional standards. For you, that means Wellegacy is accountable to something beyond its own word. Your investment is protected by a standard with real teeth behind it.</p>
+      </div>
+
+      <div class="cred-card reveal">
+        <div class="cred-num">03</div>
+        <h3 class="cred-title">Virgin Voyages Partner</h3>
+        <p class="cred-body">LaTanya's partnership with Virgin Voyages is not incidental. She chose it because she has experienced it. These ships are built for adults who want full-sensory luxury without the noise of a floating theme park. She knows how to place the right woman on the right sailing and make it feel inevitable.</p>
+      </div>
+
+      <div class="cred-card reveal">
+        <div class="cred-num">04</div>
+        <h3 class="cred-title">DAU-Certified Contracting Officer</h3>
+        <p class="cred-body">Managing multimillion-dollar government contracts requires a level of precision and accountability that does not clock out. LaTanya carries that same discipline into every vendor negotiation, itinerary draft, and client timeline. Nothing is assumed. Nothing falls through.</p>
+      </div>
+
+      <div class="cred-card reveal">
+        <div class="cred-num">05</div>
+        <h3 class="cred-title">Premium to Luxury Land and Sea Partnerships</h3>
+        <p class="cred-body">Wellegacy is partnered with a curated portfolio of premium to luxury land and sea vendors across destinations worldwide. These are not directory listings. They are vetted relationships with providers who understand the Wellegacy standard and what it means to serve a woman who has earned this trip.</p>
+      </div>
+
+      <div class="cred-card reveal">
+        <div class="cred-num">06</div>
+        <h3 class="cred-title">Lived Experience of Restoration</h3>
+        <p class="cred-body">No credential covers this one. LaTanya has been the woman in the airport, running on fumes, telling herself she's fine. She has been the woman who arrived at the destination and didn't know how to stop performing. She builds from the inside of that experience, because she knows exactly what it feels like when the right trip finally finds you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="wrap">
+    <div class="values-header reveal">
+      <span class="eyebrow">What Wellegacy Stands For</span>
+      <h2>The principles underneath every itinerary</h2>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-item reveal">
+        <span class="value-num">I.</span>
+        <h3 class="value-title">Intention Before Everything</h3>
+        <p class="value-body">No itinerary is built until LaTanya understands who you are, what you're carrying, and what you're reaching for. The planning is only as good as the listening that precedes it.</p>
+      </div>
+
+      <div class="value-item reveal">
+        <span class="value-num">II.</span>
+        <h3 class="value-title">Luxury Without Performance</h3>
+        <p class="value-body">Wellegacy's idea of luxury is not the most expensive room. It is the one that actually restores you. Quality over spectacle. Presence over optics. The trip that makes you feel like yourself again.</p>
+      </div>
+
+      <div class="value-item reveal">
+        <span class="value-num">III.</span>
+        <h3 class="value-title">Precision as an Act of Care</h3>
+        <p class="value-body">Details matter because your time matters. A missed transfer, a wrong room, a vendor who does not know you are coming. These are not minor inconveniences. They are failures of care. Wellegacy treats precision as a love language.</p>
+      </div>
+
+      <div class="value-item reveal">
+        <span class="value-num">IV.</span>
+        <h3 class="value-title">This Work Is Personal</h3>
+        <p class="value-body">LaTanya doesn't curate from the outside in. She has needed this, sought this, and built this from the inside of a life that required it. This service exists because she knows, firsthand, what's at stake when a woman finally decides to receive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="wrap-narrow">
+    <span class="eyebrow reveal">Ready to Begin</span>
+    <h2 class="cta-headline reveal">Your itinerary starts with a conversation. Let's have it.</h2>
+    <p class="cta-sub reveal">Applications take less than ten minutes. LaTanya responds within 48 hours. Everything else gets built around you.</p>
+    <a href="wellegacy-apply.html" class="btn reveal">Apply Now</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-wordmark">Wellegacy</span>
+      <span class="footer-submark">travel curation</span>
+      <p>Luxury wellness travel curation for women who are done putting themselves last. Custom-built itineraries. Intentional. Precise. Always led with care.</p>
+      <div class="trust-row">
+        <span class="trust-pill">M.A. HWC</span>
+        <span class="trust-pill">ASTA Member</span>
+        <span class="trust-pill">Virgin Voyages Partner</span>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="wellegacy.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="experiences.html">Experiences</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="investment.html">Investment</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Wellness</h4>
+      <ul>
+        <li><a href="journal.html">Journal</a></li>
+        <li><a href="supplements.html">The Wellness Edit</a></li>
+        <li><a href="partners.html">Partners</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="mailto:hello@wellegacy.com">hello@wellegacy.com</a></li>
+        <li><a href="https://instagram.com/wellegacy" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://linkedin.com/company/wellegacy" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="wellegacy-apply.html">Apply Now</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Wellegacy LLC. All rights reserved.</p>
+    <div class="footer-legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const dot  = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+  });
+
+  (function tick() {
+    rx += (mx - rx) * 0.13;
+    ry += (my - ry) * 0.13;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(tick);
+  })();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.transform = 'translate(-50%,-50%) scale(1.6)'; });
+    el.addEventListener('mouseleave', () => { ring.style.transform = 'translate(-50%,-50%) scale(1)'; });
+  });
+
+  // Scroll reveal
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        ro.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+  // Nav shadow
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = window.scrollY > 20 ? '0 4px 24px rgba(44,26,14,.1)' : 'none';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works — Wellegacy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brown:       #2C1A0E;
+      --ochre:       #C67D2F;
+      --gold:        #E8A840;
+      --sand:        #F0DEC2;
+      --cream:       #FAF5EC;
+      --teal-deep:   #1C4A47;
+      --teal-mid:    #2D6E6A;
+      --blush:       #E8C4A0;
+      --black:       #0F0A06;
+      --sol-bg:      #1A0D2E;
+      --sol-panel:   #2A1640;
+      --sol-badge:   #6B3FA0;
+      --sol-lav:     #C4A0E8;
+      --font-display:'Playfair Display', serif;
+      --font-pull:   'Cormorant Garamond', serif;
+      --font-body:   'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--brown);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* CURSOR */
+    #cursor-dot, #cursor-ring {
+      position: fixed; border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      top: -100px; left: -100px;
+    }
+    #cursor-dot  { width: 8px; height: 8px; background: var(--ochre); }
+    #cursor-ring {
+      width: 32px; height: 32px;
+      border: 1.5px solid var(--ochre); opacity: .55;
+      transition: top .1s, left .1s;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 72px;
+      background: rgba(250,245,236,.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(44,26,14,.08);
+    }
+    .nav-logo a {
+      font-family: var(--font-display); font-size: 1.2rem;
+      letter-spacing: .12em; color: var(--brown); text-decoration: none;
+      display: block; line-height: 1.15;
+    }
+    .nav-logo span {
+      display: block; font-family: var(--font-pull); font-style: italic;
+      font-size: .65rem; letter-spacing: .2em; color: var(--ochre);
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: .78rem; letter-spacing: .11em; text-transform: uppercase;
+      color: var(--brown); text-decoration: none; opacity: .7;
+      transition: opacity .2s;
+    }
+    .nav-links a:hover, .nav-links a.active { opacity: 1; }
+    .nav-cta {
+      font-size: .74rem; letter-spacing: .14em; text-transform: uppercase;
+      padding: 10px 22px; background: var(--ochre); color: var(--cream);
+      text-decoration: none; border-radius: 2px; transition: background .2s;
+    }
+    .nav-cta:hover { background: var(--brown); }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 160px 48px 90px;
+      background: var(--brown); color: var(--cream);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 70% 55% at 50% 100%, rgba(198,125,47,.2) 0%, transparent 65%);
+    }
+    .hero-label {
+      font-family: var(--font-pull); font-style: italic;
+      font-size: 1rem; color: var(--gold); letter-spacing: .14em;
+      margin-bottom: 20px; display: block; position: relative; z-index: 1;
+    }
+    .page-hero h1 {
+      font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 600; line-height: 1.1; letter-spacing: -.01em;
+      margin-bottom: 24px; position: relative; z-index: 1;
+    }
+    .page-hero p {
+      font-size: 1.05rem; max-width: 600px; margin: 0 auto;
+      opacity: .78; line-height: 1.78; position: relative; z-index: 1;
+    }
+
+    /* LAYOUT */
+    .section { padding: 100px 48px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--font-pull); font-style: italic;
+      font-size: .9rem; letter-spacing: .14em; color: var(--ochre);
+      margin-bottom: 12px; display: block;
+    }
+
+    /* PROCESS STEPS */
+    .process-section { background: var(--cream); }
+    .process-step {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+      align-items: center; padding: 80px 0;
+      border-bottom: 1px solid rgba(44,26,14,.09);
+    }
+    .process-step:last-child { border-bottom: none; }
+    .process-step.reverse .step-text   { order: 2; }
+    .process-step.reverse .step-visual { order: 1; }
+
+    .step-number {
+      font-family: var(--font-display); font-style: italic; font-weight: 700;
+      font-size: clamp(5rem, 10vw, 9rem);
+      color: var(--sand); line-height: 1; letter-spacing: -.02em;
+      margin-bottom: -18px; display: block;
+    }
+    .step-title {
+      font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 600; line-height: 1.2; margin-bottom: 20px; color: var(--brown);
+    }
+    .step-body {
+      font-size: .94rem; line-height: 1.85; color: var(--brown);
+      opacity: .82; margin-bottom: 20px;
+    }
+    .step-details {
+      list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 8px;
+    }
+    .step-details li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: .87rem; color: var(--brown); opacity: .78; line-height: 1.6;
+    }
+    .step-details li::before {
+      content: '→'; color: var(--ochre); flex-shrink: 0; margin-top: 1px;
+    }
+    .step-card {
+      background: var(--brown); color: var(--cream);
+      border-radius: 4px; padding: 48px 40px;
+      position: relative; overflow: hidden;
+    }
+    .step-card::before {
+      content: ''; position: absolute; top: -40px; right: -40px;
+      width: 180px; height: 180px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(198,125,47,.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .step-card-icon {
+      font-size: 2.2rem; margin-bottom: 20px; display: block; position: relative; z-index: 1;
+    }
+    .step-card-headline {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 1.35rem; color: var(--gold); margin-bottom: 14px;
+      line-height: 1.35; position: relative; z-index: 1;
+    }
+    .step-card-text {
+      font-size: .87rem; opacity: .72; line-height: 1.8; position: relative; z-index: 1;
+    }
+    .step-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+      background: rgba(232,168,64,.12); color: var(--gold);
+      padding: 7px 14px; border-radius: 40px; margin-top: 22px;
+      border: 1px solid rgba(232,168,64,.22); position: relative; z-index: 1;
+    }
+
+    /* PROMISE STRIP */
+    .promise-strip {
+      background: var(--teal-deep); color: var(--cream);
+      padding: 90px 48px; text-align: center;
+    }
+    .promise-strip blockquote {
+      font-family: var(--font-pull); font-style: italic;
+      font-size: clamp(1.5rem, 3.2vw, 2.6rem);
+      max-width: 820px; margin: 0 auto; line-height: 1.5; font-weight: 300;
+    }
+    .promise-strip blockquote em { color: var(--gold); font-style: normal; }
+    .promise-attr {
+      font-size: .75rem; letter-spacing: .18em; text-transform: uppercase;
+      opacity: .5; margin-top: 28px; display: block;
+    }
+
+    /* INVESTMENT */
+    .investment-section { background: #E8DCC8; }
+    .investment-intro { max-width: 680px; margin-bottom: 56px; }
+    .investment-intro h2 {
+      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600; line-height: 1.2; margin-bottom: 20px;
+    }
+    .investment-intro p {
+      font-size: .95rem; opacity: .75; line-height: 1.82; margin-bottom: 14px;
+    }
+
+    .investment-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* BASE CARD */
+    .investment-card {
+      border-radius: 4px; padding: 44px 36px;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .card-chapter-badge {
+      display: inline-block;
+      font-size: .65rem; letter-spacing: .15em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 2px;
+      margin-bottom: 14px; width: fit-content;
+    }
+    .investment-card-track {
+      font-family: var(--font-pull); font-style: italic;
+      font-size: .9rem; margin-bottom: 10px; display: block;
+    }
+    .investment-card h3 {
+      font-family: var(--font-display); font-size: 1.3rem;
+      font-weight: 600; margin-bottom: 18px; line-height: 1.25;
+    }
+    .card-price {
+      font-family: var(--font-display); font-size: 2rem;
+      margin-bottom: 6px; line-height: 1;
+    }
+    .card-price-note {
+      font-size: .78rem; opacity: .58; margin-bottom: 28px; line-height: 1.5;
+    }
+    .card-features {
+      list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1;
+    }
+    .card-features li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: .86rem; line-height: 1.55; opacity: .85;
+    }
+    .card-features li .ck { flex-shrink: 0; margin-top: 1px; }
+    .card-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 28px; font-size: .75rem; letter-spacing: .14em;
+      text-transform: uppercase; text-decoration: none;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px; transition: opacity .2s; width: fit-content;
+    }
+    .card-link:hover { opacity: .65; }
+
+    /* ELEVATION EDIT — #1C4A47 bg · #2D6E6A glow · #E8A840 gold */
+    .card-elevation {
+      background: var(--teal-deep);
+      color: var(--cream);
+      box-shadow: 0 6px 40px rgba(28,74,71,.3);
+    }
+    .card-elevation::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,110,106,.6) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .card-elevation .card-chapter-badge {
+      background: rgba(232,168,64,.18); color: var(--gold);
+      border: 1px solid rgba(232,168,64,.3);
+    }
+    .card-elevation .investment-card-track { color: #8dd8d4; }
+    .card-elevation h3          { color: var(--cream); }
+    .card-elevation .card-price { color: var(--gold); }
+    .card-elevation .card-price-note { color: rgba(250,245,236,.6); }
+    .card-elevation .card-features li { color: var(--cream); }
+    .card-elevation .ck         { color: var(--gold); }
+    .card-elevation .card-link  { color: var(--gold); border-bottom-color: rgba(232,168,64,.35); }
+
+    /* SOLSTICE COLLECTION — #1A0D2E bg · #2A1640 panel · #6B3FA0 badge · #C4A0E8 lav */
+    .card-solstice {
+      background: var(--sol-bg);
+      color: var(--cream);
+      box-shadow: 0 6px 48px rgba(26,13,46,.55);
+    }
+    .card-solstice::before {
+      content: ''; position: absolute; bottom: -70px; left: -50px;
+      width: 240px; height: 240px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(107,63,160,.32) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .card-solstice::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--sol-badge), var(--sol-lav));
+    }
+    .card-solstice .card-chapter-badge {
+      background: var(--sol-badge); color: var(--sol-lav);
+    }
+    .card-solstice .investment-card-track { color: var(--sol-lav); }
+    .card-solstice h3           { color: var(--cream); }
+    .card-solstice .card-price  { color: var(--sol-lav); }
+    .card-solstice .card-price-note { color: rgba(250,245,236,.6); }
+    .card-solstice .card-features li { color: var(--cream); }
+    .card-solstice .ck          { color: var(--sol-lav); }
+    .card-solstice .card-link   { color: var(--sol-lav); border-bottom-color: rgba(196,160,232,.35); }
+
+    /* RENAISSANCE COLLECTION — #FAF5EC pale cream · #F0DEC2 warm sand · #E8A840 gold · #E8C4A0 blush */
+    .card-renaissance {
+      background: var(--cream);
+      color: var(--brown);
+      border: 1.5px solid var(--blush);
+      box-shadow: 0 4px 28px rgba(232,196,160,.3);
+    }
+    .card-renaissance::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,168,64,.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .card-renaissance::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blush), var(--gold));
+    }
+    .card-renaissance .card-chapter-badge {
+      background: var(--sand); color: var(--ochre);
+      border: 1px solid var(--blush);
+    }
+    .card-renaissance .investment-card-track { color: var(--ochre); }
+    .card-renaissance h3            { color: var(--brown); }
+    .card-renaissance .card-price   { color: var(--ochre); }
+    .card-renaissance .card-price-note { color: var(--brown); }
+    .card-renaissance .card-features li { color: var(--brown); }
+    .card-renaissance .ck           { color: var(--ochre); }
+    .card-renaissance .card-link    { color: var(--ochre); border-bottom-color: rgba(198,125,47,.35); }
+
+    .investment-footnote {
+      font-family: var(--font-pull); font-style: italic;
+      font-size: .82rem; opacity: .5; margin-top: 32px; display: block;
+    }
+
+    /* FAQ */
+    .faq-section { background: var(--cream); }
+    .faq-header { max-width: 500px; margin-bottom: 56px; }
+    .faq-header h2 {
+      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600; line-height: 1.2; margin-top: 8px;
+    }
+    .faq-grid { display: flex; flex-direction: column; }
+    .faq-item { border-bottom: 1px solid rgba(44,26,14,.1); }
+    .faq-question {
+      font-family: var(--font-display); font-size: 1.05rem;
+      cursor: pointer; display: flex; justify-content: space-between;
+      align-items: center; gap: 20px; color: var(--brown);
+      padding: 26px 0; user-select: none;
+    }
+    .faq-icon {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      border: 1.5px solid rgba(44,26,14,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--ochre);
+      transition: transform .25s ease, background .2s, border-color .2s;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--ochre); color: var(--cream); border-color: var(--ochre);
+    }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      font-size: .91rem; line-height: 1.85; color: var(--brown); opacity: .78;
+      transition: max-height .38s ease, padding-bottom .28s ease;
+    }
+    .faq-item.open .faq-answer { max-height: 320px; padding-bottom: 24px; }
+
+    /* FINAL CTA */
+    .final-cta {
+      background: var(--brown); color: var(--cream);
+      padding: 120px 48px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .final-cta::before {
+      content: ''; position: absolute;
+      bottom: -120px; left: 50%; transform: translateX(-50%);
+      width: 800px; height: 800px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(198,125,47,.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .final-cta h2 {
+      font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 600; max-width: 680px; margin: 0 auto 20px;
+      line-height: 1.2; position: relative; z-index: 1;
+    }
+    .final-cta h2 em { font-style: italic; color: var(--gold); }
+    .final-cta p {
+      font-size: .98rem; max-width: 480px; margin: 0 auto 40px;
+      opacity: .68; line-height: 1.75; position: relative; z-index: 1;
+    }
+    .btn-primary {
+      display: inline-block; padding: 16px 44px;
+      background: var(--ochre); color: var(--cream);
+      font-size: .8rem; letter-spacing: .16em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      transition: background .2s, transform .15s;
+      position: relative; z-index: 1;
+    }
+    .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
+    .cta-note {
+      font-family: var(--font-pull); font-style: italic;
+      font-size: .84rem; opacity: .42; margin-top: 18px;
+      display: block; position: relative; z-index: 1;
+    }
+
+    /* FOOTER */
+    footer { background: var(--black); color: var(--cream); padding: 72px 48px 36px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 56px;
+    }
+    .footer-wordmark {
+      font-family: var(--font-display); font-size: 1.1rem;
+      letter-spacing: .12em; margin-bottom: 4px;
+    }
+    .footer-tagline {
+      font-family: var(--font-pull); font-style: italic;
+      font-size: .72rem; color: var(--ochre); letter-spacing: .12em; margin-bottom: 16px;
+    }
+    .footer-brand p { font-size: .8rem; opacity: .45; line-height: 1.7; max-width: 280px; }
+    .footer-creds { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .footer-creds span {
+      font-size: .65rem; letter-spacing: .1em; text-transform: uppercase;
+      border: 1px solid rgba(250,245,236,.18); padding: 5px 10px;
+      border-radius: 2px; opacity: .55;
+    }
+    .footer-col h4 {
+      font-size: .7rem; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--ochre); margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a {
+      font-size: .82rem; color: var(--cream); text-decoration: none;
+      opacity: .45; transition: opacity .2s; display: block;
+    }
+    .footer-col ul a:hover { opacity: 1; }
+    .footer-bottom {
+      border-top: 1px solid rgba(250,245,236,.08);
+      padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .73rem; opacity: .3;
+    }
+    .footer-bottom a { color: var(--cream); text-decoration: none; }
+    .footer-socials { display: flex; gap: 20px; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links, .nav-cta { display: none; }
+      .section { padding: 64px 24px; }
+      .page-hero { padding: 130px 24px 64px; }
+      .process-step { grid-template-columns: 1fr; gap: 36px; }
+      .process-step.reverse .step-text,
+      .process-step.reverse .step-visual { order: unset; }
+      .investment-grid { grid-template-columns: 1fr; gap: 24px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
+      .promise-strip { padding: 60px 24px; }
+      .final-cta { padding: 80px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <a href="wellegacy.html">
+        WELLEGACY
+        <span>travel curation</span>
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="experiences.html">Experiences</a></li>
+      <li><a href="how-it-works.html" class="active">How It Works</a></li>
+      <li><a href="partners.html">Partners</a></li>
+      <li><a href="journal.html">Journal</a></li>
+      <li><a href="investment.html">Investment</a></li>
+    </ul>
+    <a href="wellegacy-apply.html" class="nav-cta">Apply Now</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <span class="hero-label">The Process</span>
+    <h1>How It Works</h1>
+    <p>There's no booking link. No drop-down menu. No algorithm. What you get is a human being — a discerning one — who builds your journey from scratch, around the exact chapter you're living right now.</p>
+  </section>
+
+  <!-- STEPS -->
+  <section class="section process-section">
+    <div class="section-inner">
+
+      <div class="process-step reveal">
+        <div class="step-text">
+          <span class="step-number">01</span>
+          <h2 class="step-title">Apply &amp; Connect</h2>
+          <p class="step-body">Everything starts with your application. Not because we're gatekeeping — because the questions matter. Where you are, where you want to go, what restoration actually looks like for you right now. That form is the beginning of a real conversation.</p>
+          <p class="step-body">Within 48 hours, LaTanya personally reviews your application and reaches out. The calendar link isn't public — it's shared with you directly, after we've confirmed this is the right fit in both directions.</p>
+          <ul class="step-details">
+            <li>4-part intake covering identity, travel style, timing, and investment range</li>
+            <li>48-hour personal response — from LaTanya, not an auto-responder</li>
+            <li>A short discovery call to go deeper before anything is built</li>
+            <li>No obligation after the call. No pressure. Ever.</li>
+          </ul>
+        </div>
+        <div class="step-visual">
+          <div class="step-card">
+            <span class="step-card-icon">✦</span>
+            <p class="step-card-headline">"The form isn't a filter. It's the first part of the itinerary."</p>
+            <p class="step-card-text">Every answer shapes what we build. There are no wrong answers — only honest ones.</p>
+            <span class="step-badge">✦ 48-Hour Response Commitment</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reverse reveal">
+        <div class="step-text">
+          <span class="step-number">02</span>
+          <h2 class="step-title">We Build Your Journey</h2>
+          <p class="step-body">This is where the curation happens. Not search engines. Not template packages. LaTanya draws on vetted supplier relationships, on-the-ground research, and a genuine understanding of what makes a trip feel like yours — and not just anyone's.</p>
+          <p class="step-body">You receive a custom itinerary draft — complete with accommodations, experiences, pacing notes, and the rationale behind every choice. We revise until it's exactly right.</p>
+          <ul class="step-details">
+            <li>Custom itinerary built around your specific brief</li>
+            <li>Accommodations hand-selected for quality, character, and fit</li>
+            <li>Curated experiences: restaurants, wellness, private guides</li>
+            <li>Revision rounds until you're certain</li>
+            <li>All supplier negotiations handled — you never make a single vendor call</li>
+          </ul>
+        </div>
+        <div class="step-visual">
+          <div class="step-card">
+            <span class="step-card-icon">◈</span>
+            <p class="step-card-headline">"This is not a package. It is a portrait."</p>
+            <p class="step-card-text">Every detail is chosen with your specific chapter in mind — the woman you are right now, not a general profile of a traveler.</p>
+            <span class="step-badge">✦ Revision Rounds Included</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-step reveal">
+        <div class="step-text">
+          <span class="step-number">03</span>
+          <h2 class="step-title">Travel With Assurance</h2>
+          <p class="step-body">By the time you board, there is nothing left to manage. Your accommodations are confirmed. Your transfers are arranged. Your experiences are booked. Your emergency contact has a point of contact who knows your entire itinerary.</p>
+          <p class="step-body">Wellegacy's curation doesn't end at booking. If something shifts while you're there — a late flight, a change of heart, an upgrade — we handle it.</p>
+          <ul class="step-details">
+            <li>Full pre-departure briefing: documents, contacts, what to expect</li>
+            <li>All bookings confirmed and cross-referenced before you leave</li>
+            <li>On-trip concierge access for changes, questions, or surprises</li>
+            <li>Post-trip debrief to capture what worked and what you'd want more of</li>
+            <li>Your preferences on file — every next trip starts a step ahead</li>
+          </ul>
+        </div>
+        <div class="step-visual">
+          <div class="step-card">
+            <span class="step-card-icon">◎</span>
+            <p class="step-card-headline">"You are not the logistics coordinator. You are the guest."</p>
+            <p class="step-card-text">The only thing you are responsible for is arriving and allowing the experience to happen. We have the rest.</p>
+            <span class="step-badge">✦ On-Trip Concierge Access</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROMISE STRIP -->
+  <section class="promise-strip">
+    <blockquote>
+      "My background is in managing multimillion-dollar contracts — the kind of work where precision is <em>non-negotiable</em> and a missed detail can cost everything. I brought that same standard to travel curation. Your itinerary is held to the same level of rigor."
+    </blockquote>
+    <span class="promise-attr">— LaTanya, Founder &amp; Lead Curator · M.A. HWC · ASTA Member · Virgin Voyages Partner</span>
+  </section>
+
+  <!-- INVESTMENT -->
+  <section class="section investment-section">
+    <div class="section-inner">
+
+      <div class="investment-intro">
+        <span class="section-label">Investment</span>
+        <h2>What You Should Know Before You Apply</h2>
+        <p>Wellegacy is designed for women ready to invest in restoration — not just the cost of a room, but the full experience of a journey built around them. These ranges are starting points; your specific itinerary is scoped in consultation.</p>
+        <p>Whether you're building your chapter, navigating a reorientation, or finally claiming the time that's yours — there is a collection designed for the woman you are <em>right now</em>.</p>
+      </div>
+
+      <div class="investment-grid reveal">
+
+        <!-- ELEVATION EDIT -->
+        <div class="investment-card card-elevation">
+          <span class="card-chapter-badge">Chapter One</span>
+          <span class="investment-card-track">The Elevation Edit</span>
+          <h3>For the woman building her chapter</h3>
+          <div class="card-price">From $4,500</div>
+          <p class="card-price-note">Per person · Solo or friends group · Bold &amp; celebratory</p>
+          <ul class="card-features">
+            <li><span class="ck">✓</span> Custom solo or group itinerary</li>
+            <li><span class="ck">✓</span> Accommodation curation &amp; booking</li>
+            <li><span class="ck">✓</span> Curated experiences &amp; reservations</li>
+            <li><span class="ck">✓</span> Pre-departure briefing</li>
+            <li><span class="ck">✓</span> On-trip concierge access</li>
+          </ul>
+          <a href="investment.html" class="card-link">Full investment guide →</a>
+        </div>
+
+        <!-- SOLSTICE COLLECTION -->
+        <div class="investment-card card-solstice">
+          <span class="card-chapter-badge">Chapter Two</span>
+          <span class="investment-card-track">The Solstice Collection</span>
+          <h3>For the woman in the middle of becoming</h3>
+          <div class="card-price">From $5,200</div>
+          <p class="card-price-note">Per person · Solo or intimate duo · Clarifying &amp; restorative</p>
+          <ul class="card-features">
+            <li><span class="ck">✓</span> Custom itinerary built around transition &amp; renewal</li>
+            <li><span class="ck">✓</span> Intentional pacing — space to think, not just see</li>
+            <li><span class="ck">✓</span> Wellness-forward accommodation &amp; experience curation</li>
+            <li><span class="ck">✓</span> Pre-trip clarity session with LaTanya</li>
+            <li><span class="ck">✓</span> On-trip concierge access</li>
+          </ul>
+          <a href="investment.html" class="card-link">Full investment guide →</a>
+        </div>
+
+        <!-- RENAISSANCE COLLECTION -->
+        <div class="investment-card card-renaissance">
+          <span class="card-chapter-badge">Chapter Three</span>
+          <span class="investment-card-track">The Renaissance Collection</span>
+          <h3>For the woman whose time has finally arrived</h3>
+          <div class="card-price">From $6,500</div>
+          <p class="card-price-note">Per person · Couples, milestone groups &amp; solo immersives</p>
+          <ul class="card-features">
+            <li><span class="ck">✓</span> Extended custom itinerary (7–14 days)</li>
+            <li><span class="ck">✓</span> Luxury accommodation curation &amp; booking</li>
+            <li><span class="ck">✓</span> Private guides, transfers &amp; experiences</li>
+            <li><span class="ck">✓</span> Group coordination for milestone trips</li>
+            <li><span class="ck">✓</span> Full pre- and on-trip concierge access</li>
+          </ul>
+          <a href="investment.html" class="card-link">Full investment guide →</a>
+        </div>
+
+      </div>
+
+      <span class="investment-footnote">Flights, personal spending, and travel insurance are not included. Wellegacy can advise on all three.</span>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq-section">
+    <div class="section-inner">
+      <div class="faq-header">
+        <span class="section-label">Questions</span>
+        <h2>Things People Ask Us</h2>
+      </div>
+      <div class="faq-grid">
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Do I have to apply to get a quote or see pricing?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">Yes — and intentionally. Wellegacy is not a storefront with published packages. Every itinerary is custom, which means pricing depends entirely on where you want to go, when, with whom, and what experience level you're seeking. The application is how we scope your journey accurately. Investment ranges are on the Investment Guide page so you can assess fit before applying.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Is there a fee just for the consultation?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">The initial discovery call is complimentary. If we move forward together, a planning retainer is applied — and credited toward your overall investment. The purpose of the call is mutual: we want to confirm this is the right fit for both of us before either of us commits.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            Do you book flights?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">Wellegacy can advise on flight strategy — timing, class of service, routing, and points/miles maximization — but flights are generally booked independently by clients. This keeps you in full control of your loyalty programs. We walk you through exactly what to book and when.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What makes this different from a travel agent?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">The depth of curation and the relationship. A traditional travel agent books what you ask for. Wellegacy asks better questions first — about your chapter, your energy, what restoration looks like right now — and builds something that fits the woman you actually are. LaTanya is also a credentialed wellness professional, which shapes how rest and intention are woven into the journey, not just added as an afterthought.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            I've never traveled solo. Is this for me?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">Absolutely — and you may be exactly who this was built for. A curated solo itinerary with concierge support is often the safest and most expansive first solo trip a woman can take. You are never alone in the logistical sense. You're free in every other sense.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            How far in advance should I apply?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">For peak season or milestone group trips, we recommend applying 4–6 months in advance. For flexible timing or off-peak destinations, 8–12 weeks can work. Rush curation is possible in some cases — mention your timeline in the application and we'll be direct about what's feasible.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            What if my plans change after booking?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">Life moves. Wellegacy's approach includes building flexibility into your itinerary where possible and advising on travel protection that covers real-life circumstances. We walk you through vendor-specific change and cancellation policies before anything is booked — no surprises.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <h2>You've read how it works.<br><em>Now let us work for you.</em></h2>
+    <p>The application takes about ten minutes. The journey it starts can last a lifetime.</p>
+    <a href="wellegacy-apply.html" class="btn-primary">Apply Now</a>
+    <span class="cta-note">We respond within 48 hours. Always personally.</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-wordmark">WELLEGACY</div>
+          <div class="footer-tagline">travel curation</div>
+          <p>Luxury wellness travel curation for women who are done putting themselves last. Every itinerary is built around the specific woman sitting across from us.</p>
+          <div class="footer-creds">
+            <span>M.A. HWC</span>
+            <span>ASTA Member</span>
+            <span>Virgin Voyages Partner</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigate</h4>
+          <ul>
+            <li><a href="wellegacy.html">Home</a></li>
+            <li><a href="about.html">About LaTanya</a></li>
+            <li><a href="experiences.html">Experiences</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+            <li><a href="investment.html">Investment</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="partners.html">Partners</a></li>
+            <li><a href="journal.html">Journal</a></li>
+            <li><a href="supplements.html">The Wellness Edit</a></li>
+            <li><a href="wellegacy-apply.html">Apply Now</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="mailto:hello@wellegacy.com">hello@wellegacy.com</a></li>
+            <li><a href="https://www.instagram.com/wellegacy" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://www.linkedin.com/company/wellegacy" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2025 Wellegacy LLC. All rights reserved.</span>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/wellegacy" target="_blank" rel="noopener">IG</a>
+          <a href="https://www.linkedin.com/company/wellegacy" target="_blank" rel="noopener">LI</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Cursor
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    document.addEventListener('mousemove', function(e) {
+      var x = e.clientX + 'px', y = e.clientY + 'px';
+      dot.style.left = x;  dot.style.top = y;
+      ring.style.left = x; ring.style.top = y;
+    });
+
+    // Scroll reveal
+    var revealObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function(el) { revealObs.observe(el); });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(function(item) {
+      item.querySelector('.faq-question').addEventListener('click', function() {
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>
